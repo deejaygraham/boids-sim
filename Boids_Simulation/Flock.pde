@@ -1,10 +1,8 @@
 class Flock {
   ArrayList<Boid> boids; // An ArrayList for all the boids
 
-  Flock() {
+  Flock(int flockSize){
     boids = new ArrayList<Boid>(); // Initialize the ArrayList
-    
-    int flockSize = 150;
     
     for (int i = 0; i < flockSize; i++) {
       float randomX = random(width);

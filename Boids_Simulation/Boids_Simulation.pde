@@ -3,7 +3,7 @@ Flock flock;
 void setup() {
   size(640, 360);
   
-  flock = new Flock();
+  flock = new Flock(10);
 }
 
 void draw() {
