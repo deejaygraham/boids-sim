@@ -5,9 +5,12 @@ class Flock {
     boids = new ArrayList<Boid>(); // Initialize the ArrayList
     
     for (int i = 0; i < flockSize; i++) {
-      float randomX = random(width);
-      float randomY = random(height);
-      addBoid(new Boid(randomX, randomY));
+      float positionX = random(width);
+      float positionY = random(height);
+      
+      positionX = width/2;
+      positionY = height/2;
+      addBoid(new Boid(positionX, positionY));
     }
   }
 
