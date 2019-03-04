@@ -4,8 +4,12 @@ class Flock {
   Flock() {
     boids = new ArrayList<Boid>(); // Initialize the ArrayList
     
-    for (int i = 0; i < 150; i++) {
-      addBoid(new Boid(width/2,height/2));
+    int flockSize = 150;
+    
+    for (int i = 0; i < flockSize; i++) {
+      float randomX = random(width);
+      float randomY = random(height);
+      addBoid(new Boid(randomX, randomY));
     }
   }
 
