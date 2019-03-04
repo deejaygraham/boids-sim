@@ -7,27 +7,32 @@ class Boid {
   float maxforce;    // Maximum steering force
   float maxspeed;    // Maximum speed
   color colour;      // beautiful plumage
- 
-    Boid(float x, float y) {
-      acceleration = new PVector(0, 0);
+  int flapPosition;
+  int flapMax;
+  
+  Boid(float x, float y) {
+    acceleration = new PVector(0, 0);
 
-      int red = int(random(50, 200));
-      int green = int(random(50, 200));
-      int blue = int(random(50, 200));
-    
-      colour = color(red, green, blue);
-    
+    int red = int(random(50, 255));
+    int green = int(random(50, 255));
+    int blue = int(random(50, 255));
+  
+    colour = color(red, green, blue);
+  
     // This is a new PVector method not yet implemented in JS
     // velocity = PVector.random2D();
 
     // Leaving the code temporarily this way so that this example runs in JS
-      float angle = random(TWO_PI);
-      velocity = new PVector(cos(angle), sin(angle));
+    float angle = random(TWO_PI);
+    velocity = new PVector(cos(angle), sin(angle));
 
-      position = new PVector(x, y);
-      r = 2.0;
-      maxspeed = 2;
-      maxforce = 0.03;
+    position = new PVector(x, y);
+    r = 2.0;
+    maxspeed = 2;
+    maxforce = 0.03;
+    
+    flapMax = int(random(50, 100));
+    flapPosition = int(random(1,flapMax));
   }
 
   void run(ArrayList<Boid> otherBoids) {
@@ -35,6 +40,12 @@ class Boid {
     update();
     borders();
     render();
+  }
+
+  void flap() {
+      flapPosition++;
+      if (flapPosition >= flapMax)
+        flapPosition = 0;
   }
 
   void applyForce(PVector force) {
@@ -69,6 +80,7 @@ class Boid {
     position.add(velocity);
     // Reset acceleration to 0 each cycle
     acceleration.mult(0);
+    flap();
   }
 
   // A method that calculates and applies a steering force towards a target
@@ -100,9 +112,21 @@ class Boid {
     translate(position.x, position.y);
     rotate(theta);
     beginShape(TRIANGLES);
+    
+    // gradation of flapping
+    float r2 = r;
+    if (flapPosition < (flapMax / 3))
+    {
+       r2 -= 1.0;
+    }
+    else 
+    {
+      r2 += 2.0;
+    }
+    
     vertex(0, -r*2);
-    vertex(-r, r*2);
-    vertex(r, r*2);
+    vertex(-r2, r*2);
+    vertex(r2, r*2);
     endShape();
     popMatrix();
   }
