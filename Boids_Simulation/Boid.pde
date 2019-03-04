@@ -6,21 +6,28 @@ class Boid {
   float r;
   float maxforce;    // Maximum steering force
   float maxspeed;    // Maximum speed
-
+  color colour;      // beautiful plumage
+ 
     Boid(float x, float y) {
-    acceleration = new PVector(0, 0);
+      acceleration = new PVector(0, 0);
 
+      int red = int(random(50, 200));
+      int green = int(random(50, 200));
+      int blue = int(random(50, 200));
+    
+      colour = color(red, green, blue);
+    
     // This is a new PVector method not yet implemented in JS
     // velocity = PVector.random2D();
 
     // Leaving the code temporarily this way so that this example runs in JS
-    float angle = random(TWO_PI);
-    velocity = new PVector(cos(angle), sin(angle));
+      float angle = random(TWO_PI);
+      velocity = new PVector(cos(angle), sin(angle));
 
-    position = new PVector(x, y);
-    r = 2.0;
-    maxspeed = 2;
-    maxforce = 0.03;
+      position = new PVector(x, y);
+      r = 2.0;
+      maxspeed = 2;
+      maxforce = 0.03;
   }
 
   void run(ArrayList<Boid> otherBoids) {
@@ -87,8 +94,8 @@ class Boid {
     float theta = velocity.heading2D() + radians(90);
     // heading2D() above is now heading() but leaving old syntax until Processing.js catches up
     
-    fill(200, 100);
-    stroke(255);
+    fill(colour); 
+    stroke(colour); 
     pushMatrix();
     translate(position.x, position.y);
     rotate(theta);
